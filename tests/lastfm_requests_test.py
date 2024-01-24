@@ -1,24 +1,25 @@
 import os
 import unittest
 from dotenv import load_dotenv
-from src.lastfm_requests import LastFMConnection
+from src.lastfm_requests import LastFMCollector
 
 
-class LastFMConnectionTests(unittest.TestCase):
+class LastFMCollectorTests(unittest.TestCase):
     def setUp(self):
         load_dotenv()
         api_key = os.getenv("LASTFM_API_KEY")
         api_secret = os.getenv("LASTFM_API_SECRET")
-        self.lastfm_connection = LastFMConnection(api_key, api_secret)
+        self.lastfm_connection = LastFMCollector(api_key, api_secret)
+        self.username = "Car_door"
 
     def testLibraryArtists(self):
         cardoor_libary_artists = self.lastfm_connection._get_user_artists(
-            "Car_door", limit=10
+            self.username, limit=10
         )
         self.assertEqual(len(cardoor_libary_artists["artists"]["artist"]), 10)
 
     def testGetArtistInfo(self):
-        artist_info = self.lastfm_connection._get_artist_info(artist="j dilla")
+        artist_info = self.lastfm_connection._get_artist_info(artist_name="j dilla")
         self.assertEqual(
             (list(artist_info["artist"].keys())),
             [
@@ -34,3 +35,7 @@ class LastFMConnectionTests(unittest.TestCase):
                 "bio",
             ],
         )
+
+    def testGetLibraryArtistInfo(self):
+        library_artist_info = self.lastfm_connection.get_library_artist_info(self.username)
+        self.assertTrue(True)
