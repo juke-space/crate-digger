@@ -1,5 +1,5 @@
 import unittest
-from tests.lastfm_requests_test import LastFMConnectionTests
+from tests.lastfm_requests_test import LastFMCollectorTests
 
 def main():
     unittest.main()
