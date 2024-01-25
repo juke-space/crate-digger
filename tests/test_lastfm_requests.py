@@ -34,3 +34,6 @@ class LastFMConnectionTests(unittest.TestCase):
                 "bio",
             ],
         )
+
+if __name__ == '__main__':
+    unittest.main()

@@ -26,5 +26,5 @@ To install dependencies, run `python -m pip install -r requirements.txt`.
 ## Testing
 The test suite consists primarily of integration tests at the moment. To run the test suite, execute the following command: 
 ```
-python test.py
+python -m unittest
 ```
