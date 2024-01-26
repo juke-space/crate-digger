@@ -33,9 +33,9 @@ class LastFMCollectorTests(unittest.TestCase):
                 "similar",
                 "tags",
                 "bio",
-            ],
+            ]
         )
 
     def testGetLibraryArtistInfo(self):
-        library_artist_info = self.lastfm_connection.get_library_artist_info(self.username)
-        self.assertTrue(True)
+        library_artist_info = self.lastfm_connection.get_library_artist_info(self.username, limit=500)
+        self.assertTrue(library_artist_info)

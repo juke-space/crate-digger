@@ -17,10 +17,6 @@ def make_request(request_url: str) -> Union[None, dict]:
         raise Exception(f"No result returned for {request_url}. Request invalid.")
 
 
-DEFAULT_BURST_WINDOW = datetime.timedelta(seconds=5)
-DEFAULT_WAIT_WINDOW = datetime.timedelta(seconds=15)
-
-
 class BurstThrottle(object):
     max_hits = None
     hits = None
@@ -65,7 +61,6 @@ class MyHttpAdapter(requests.adapters.HTTPAdapter):
         while not request_successful:
             wait_time = self.throttle.throttle()
             while wait_time > datetime.timedelta(0):
-                print(wait_time.total_seconds())
                 gevent.sleep(wait_time.total_seconds(), ref=True) # NOTE: this is waiting an insane amount of time. Figure out why.
                 wait_time = self.throttle.throttle()
 
@@ -79,16 +74,16 @@ class MyHttpAdapter(requests.adapters.HTTPAdapter):
 def send_async_requests(
     urls: List[str],
     max_concurrent_requests: int,
-    # burst_window: ,
-    # wait_window: datetime.timedelta = ,
+    burst_window: datetime.timedelta = datetime.timedelta(seconds=5),
+    wait_window: datetime.timedelta = datetime.timedelta(seconds=1),
 ):
     requests_adapter = MyHttpAdapter(
         pool_connections=max_concurrent_requests,
         pool_maxsize=max_concurrent_requests,
         max_retries=0,
         pool_block=False,
-        burst_window=datetime.timedelta(5),
-        wait_window=datetime.timedelta(15),
+        burst_window=burst_window,
+        wait_window=wait_window,
     )
 
     requests_session = requests.session()

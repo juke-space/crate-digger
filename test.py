@@ -1,5 +1,5 @@
 import unittest
-from tests.lastfm_requests_test import LastFMCollectorTests
+from tests.lastfm_requests_test import LastFMCollectorTests  # noqa: F401
 
 def main():
     unittest.main()

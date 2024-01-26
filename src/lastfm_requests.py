@@ -1,16 +1,6 @@
-import json
-import grequests
-import requests
 import numpy as np
 from typing import Union, List
-
-
-def _make_request(request_url: str) -> Union[None, dict]:
-    result = requests.get(request_url)
-    if result.status_code == 200:
-        return json.loads(result.content.decode())
-    elif result.status_code == 404:
-        raise Exception(f"No result returned for {request_url}. Request invalid.")
+from src.efficient_requests import make_request, send_async_requests
 
 
 class LastFMCollector:
@@ -20,14 +10,14 @@ class LastFMCollector:
     ARTIST_INFO_ENDPOINT = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo"
     MUSIC_BRAINZ_ID_FIELD = "mbid"
     ARTIST_FIELD = "artist"
-    MAX_CONCURRENT_REQUESTS = 100
+    MAX_CONCURRENT_REQUESTS = 250
 
     def __init__(self, lastfm_api_key: str, lastfm_api_secret: str):
         self.api_key = lastfm_api_key
         self.api_secret = lastfm_api_secret
 
-    def get_library_artist_info(self, username: str, artist_limit: int = 2000):
-        library_artist_results = self._get_user_artists(username, limit=artist_limit)
+    def get_library_artist_info(self, username: str, limit: int = 2000):
+        library_artist_results = self._get_user_artists(username, limit=limit)
         artist_mbids = [ # NOTE: Update so artists without mbids are queried with their names.
             artist_dict[self.MUSIC_BRAINZ_ID_FIELD]
             for artist_dict in library_artist_results["artists"][self.ARTIST_FIELD]
@@ -52,7 +42,7 @@ class LastFMCollector:
                 f"format={response_format}",
             ]
         )
-        user_artists = _make_request(request_url)
+        user_artists = make_request(request_url)
         return user_artists
 
     def _get_artist_info(
@@ -69,7 +59,7 @@ class LastFMCollector:
             request_url = self._construct_artist_query(
                 self.ARTIST_FIELD, artist_name, response_format
             )
-        artist_info = _make_request(request_url)
+        artist_info = make_request(request_url)
         return artist_info
 
     def _get_artists_info_async(  # NOTE: Make this take a list of artists rather than a single one.
@@ -100,9 +90,7 @@ class LastFMCollector:
                     for artist_name in artist_names
                 ]
             )
-
-        reqs = (grequests.get(url) for url in query_urls) # NOTE: Need to implement wait mechanism when request is beyond rate limit.
-        return grequests.map(reqs, size=self.MAX_CONCURRENT_REQUESTS)
+        return send_async_requests(query_urls, self.MAX_CONCURRENT_REQUESTS)
 
     def _construct_artist_query(
         self, id_field: str, id_value: str, response_format: str
