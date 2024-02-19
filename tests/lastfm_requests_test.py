@@ -16,6 +16,7 @@ class LastFMCollectorTests(unittest.TestCase):
         cardoor_libary_artists = self.lastfm_connection._get_user_artists(
             self.username, limit=10
         )
+
         self.assertEqual(len(cardoor_libary_artists["artists"]["artist"]), 10)
 
     def testGetArtistInfo(self):
@@ -37,5 +38,6 @@ class LastFMCollectorTests(unittest.TestCase):
         )
 
     def testGetLibraryArtistInfo(self):
-        library_artist_info = self.lastfm_connection.get_library_artist_info(self.username, limit=500)
-        self.assertTrue(library_artist_info)
+        library_artist_info = self.lastfm_connection.get_library_artist_info(self.username, limit=1000)
+        # NOTE: Count errors here.
+        self.assertTrue(library_artist_info == 2000)

@@ -9,8 +9,9 @@ class LastFMCollector:
     )
     ARTIST_INFO_ENDPOINT = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo"
     MUSIC_BRAINZ_ID_FIELD = "mbid"
+    NAME_FIELD = "name"
     ARTIST_FIELD = "artist"
-    MAX_CONCURRENT_REQUESTS = 250
+    MAX_CONCURRENT_REQUESTS = 500
 
     def __init__(self, lastfm_api_key: str, lastfm_api_secret: str):
         self.api_key = lastfm_api_key
@@ -18,11 +19,13 @@ class LastFMCollector:
 
     def get_library_artist_info(self, username: str, limit: int = 2000):
         library_artist_results = self._get_user_artists(username, limit=limit)
-        artist_mbids = [ # NOTE: Update so artists without mbids are queried with their names.
-            artist_dict[self.MUSIC_BRAINZ_ID_FIELD]
+        artist_names = [
+            artist_dict[self.NAME_FIELD]
+            # if artist_dict[self.MUSIC_BRAINZ_ID_FIELD] != "" else
+            # artist_dict[self.NAME_FIELD]
             for artist_dict in library_artist_results["artists"][self.ARTIST_FIELD]
         ]
-        library_artist_info_results = self._get_artists_info_async(artist_mbids=artist_mbids)
+        library_artist_info_results = self._get_artists_info_async(artist_names=artist_names)
         # NOTE: When we have the results, we want to get to check both artist_mbids and library_artist_info_results for mbids
         # Some show up in one or the other but neither seems to have all that the other doesn't.
         return library_artist_info_results

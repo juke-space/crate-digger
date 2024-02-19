@@ -56,25 +56,21 @@ class MyHttpAdapter(requests.adapters.HTTPAdapter):
                                             max_retries=max_retries, pool_block=pool_block)
 
     def send(self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None):
-        request_successful = False
         response = None
-        while not request_successful:
+        wait_time = self.throttle.throttle()
+        if wait_time > datetime.timedelta(0):
+            gevent.sleep(wait_time.total_seconds(), ref=True) # NOTE: this is waiting an insane amount of time. Figure out why.
             wait_time = self.throttle.throttle()
-            while wait_time > datetime.timedelta(0):
-                gevent.sleep(wait_time.total_seconds(), ref=True) # NOTE: this is waiting an insane amount of time. Figure out why.
-                wait_time = self.throttle.throttle()
 
-            response = super(MyHttpAdapter, self).send(request, stream=stream, timeout=timeout,
+        response = super(MyHttpAdapter, self).send(request, stream=stream, timeout=timeout,
                                                        verify=verify, cert=cert, proxies=proxies)
-            if response.status_code != 429:
-                request_successful = True
         return response
 
 
 def send_async_requests(
     urls: List[str],
     max_concurrent_requests: int,
-    burst_window: datetime.timedelta = datetime.timedelta(seconds=5),
+    burst_window: datetime.timedelta = datetime.timedelta(seconds=19),
     wait_window: datetime.timedelta = datetime.timedelta(seconds=1),
 ):
     requests_adapter = MyHttpAdapter(
