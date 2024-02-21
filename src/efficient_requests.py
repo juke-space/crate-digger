@@ -70,8 +70,8 @@ class MyHttpAdapter(requests.adapters.HTTPAdapter):
 def send_async_requests(
     urls: List[str],
     max_concurrent_requests: int,
-    burst_window: datetime.timedelta = datetime.timedelta(seconds=19),
-    wait_window: datetime.timedelta = datetime.timedelta(seconds=1),
+    burst_window: datetime.timedelta = datetime.timedelta(seconds=0),
+    wait_window: datetime.timedelta = datetime.timedelta(seconds=0),
 ):
     requests_adapter = MyHttpAdapter(
         pool_connections=max_concurrent_requests,

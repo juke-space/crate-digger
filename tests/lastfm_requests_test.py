@@ -40,4 +40,4 @@ class LastFMCollectorTests(unittest.TestCase):
     def testGetLibraryArtistInfo(self):
         library_artist_info = self.lastfm_connection.get_library_artist_info(self.username, limit=1000)
         # NOTE: Count errors here.
-        self.assertTrue(library_artist_info == 2000)
+        self.assertTrue(library_artist_info == 1000)
