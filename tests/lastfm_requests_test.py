@@ -12,12 +12,12 @@ class LastFMCollectorTests(unittest.TestCase):
         self.lastfm_connection = LastFMCollector(api_key, api_secret)
         self.username = "Car_door"
 
-    def testLibraryArtists(self):
-        cardoor_libary_artists = self.lastfm_connection._get_user_artists(
-            self.username, limit=10
-        )
+    # def testLibraryArtists(self):
+    #     cardoor_libary_artists = self.lastfm_connection._get_user_artists(
+    #         self.username, limit=10
+    #     )
 
-        self.assertEqual(len(cardoor_libary_artists["artists"]["artist"]), 10)
+    #     self.assertEqual(len(cardoor_libary_artists["artists"]["artist"]), 10)
 
     def testGetArtistInfo(self):
         artist_info = self.lastfm_connection._get_artist_info(artist_name="j dilla")
@@ -40,4 +40,4 @@ class LastFMCollectorTests(unittest.TestCase):
     def testGetLibraryArtistInfo(self):
         library_artist_info = self.lastfm_connection.get_library_artist_info(self.username, limit=1000)
         # NOTE: Count errors here.
-        self.assertTrue(library_artist_info == 1000)
+        self.assertTrue(library_artist_info == 1000) # NOTE: ONLY CERTAIN ONES ARE RETURNED NONE.

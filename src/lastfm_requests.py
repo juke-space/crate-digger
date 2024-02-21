@@ -11,7 +11,7 @@ class LastFMCollector:
     MUSIC_BRAINZ_ID_FIELD = "mbid"
     NAME_FIELD = "name"
     ARTIST_FIELD = "artist"
-    MAX_CONCURRENT_REQUESTS = 1000
+    MAX_CONCURRENT_REQUESTS = 500
 
     def __init__(self, lastfm_api_key: str, lastfm_api_secret: str):
         self.api_key = lastfm_api_key

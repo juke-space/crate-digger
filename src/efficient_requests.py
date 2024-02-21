@@ -17,63 +17,59 @@ def make_request(request_url: str) -> Union[None, dict]:
         raise Exception(f"No result returned for {request_url}. Request invalid.")
 
 
-class BurstThrottle(object):
+class BurstHttpAdapter(requests.adapters.HTTPAdapter):
+    throttle = None
     max_hits = None
     hits = None
     burst_window = None
     total_window = None
     timestamp = None
 
-    def __init__(self, max_hits, burst_window, wait_window):
-        self.max_hits = max_hits
-        self.hits = 0
-        self.burst_window = burst_window
-        self.total_window = burst_window + wait_window
-        self.timestamp = datetime.datetime.min
-
-    def throttle(self):
-        now = datetime.datetime.utcnow()
-        if now < self.timestamp + self.total_window:
-            if (now < self.timestamp + self.burst_window) and (self.hits < self.max_hits):
-                self.hits += 1
-                return datetime.timedelta(0)
-            else:
-                return self.timestamp + self.total_window - now
-        else:
-            self.timestamp = now
-            self.hits = 1
-            return datetime.timedelta(0)
-
-class MyHttpAdapter(requests.adapters.HTTPAdapter):
-    throttle = None
-
     def __init__(self, pool_connections=requests.adapters.DEFAULT_POOLSIZE,
                  pool_maxsize=requests.adapters.DEFAULT_POOLSIZE, max_retries=requests.adapters.DEFAULT_RETRIES,
                  pool_block=requests.adapters.DEFAULT_POOLBLOCK, burst_window=DEFAULT_BURST_WINDOW,
                  wait_window=DEFAULT_WAIT_WINDOW):
-        self.throttle = BurstThrottle(pool_maxsize, burst_window, wait_window)
-        super(MyHttpAdapter, self).__init__(pool_connections=pool_connections, pool_maxsize=pool_maxsize,
+        self.max_hits = pool_maxsize
+        self.hits = 0
+        self.burst_window = burst_window
+        self.wait_window = wait_window
+        self.now = None
+        self.burst_start = None
+        super(BurstHttpAdapter, self).__init__(pool_connections=pool_connections, pool_maxsize=pool_maxsize,
                                             max_retries=max_retries, pool_block=pool_block)
 
     def send(self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None):
         response = None
-        wait_time = self.throttle.throttle()
+        wait_time = self.throttle()
         if wait_time > datetime.timedelta(0):
-            gevent.sleep(wait_time.total_seconds(), ref=True) # NOTE: this is waiting an insane amount of time. Figure out why.
-            wait_time = self.throttle.throttle()
+            gevent.sleep(wait_time.total_seconds(), ref=True)
 
-        response = super(MyHttpAdapter, self).send(request, stream=stream, timeout=timeout,
+        response = super(BurstHttpAdapter, self).send(request, stream=stream, timeout=timeout,
                                                        verify=verify, cert=cert, proxies=proxies)
+        result = json.loads(response.content.decode())
+        if "error" in result and result["error"] == 29:
+            gevent.sleep(self.wait_time.total_seconds(), ref=True)
         return response
 
+    def throttle(self):
+        self.now = datetime.datetime.utcnow()
+        if not self.burst_start:
+            self.burst_start = datetime.datetime.utcnow()
+
+        if self.now < self.burst_start + self.burst_window and self.hits < self.max_hits:
+            self.hits += 1
+            return datetime.timedelta(0)
+
+        self.burst_start = None
+        return self.wait_window
 
 def send_async_requests(
     urls: List[str],
     max_concurrent_requests: int,
-    burst_window: datetime.timedelta = datetime.timedelta(seconds=0),
-    wait_window: datetime.timedelta = datetime.timedelta(seconds=0),
+    burst_window: datetime.timedelta = datetime.timedelta(seconds=15),
+    wait_window: datetime.timedelta = datetime.timedelta(seconds=10),
 ):
-    requests_adapter = MyHttpAdapter(
+    requests_adapter = BurstHttpAdapter(
         pool_connections=max_concurrent_requests,
         pool_maxsize=max_concurrent_requests,
         max_retries=0,
