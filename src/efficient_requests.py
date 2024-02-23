@@ -1,10 +1,11 @@
+import datetime
 import json
+import traceback
+from typing import List, Union
+
 import grequests
 import requests
 import gevent
-import datetime
-import traceback
-from typing import List, Union
 
 
 def make_request(request_url: str) -> Union[None, dict]:
