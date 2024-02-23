@@ -88,9 +88,9 @@ class BurstHttpAdapter(requests.adapters.HTTPAdapter):
         return response
 
     def _throttle(self):
-        self.now = datetime.datetime.utcnow()
+        self.now = datetime.datetime.now(datetime.UTC)
         if not self.burst_start:
-            self.burst_start = datetime.datetime.utcnow()
+            self.burst_start = datetime.datetime.now(datetime.UTC)
 
         if self.now < self.burst_start + self.burst_window:
             return datetime.timedelta(0)
