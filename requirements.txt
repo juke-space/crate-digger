@@ -1,2 +1,5 @@
 requests==2.31.0
+grequests==0.7.0
+gevent==23.9.1
 python-dotenv==1.0.0
+numpy==1.26.3
