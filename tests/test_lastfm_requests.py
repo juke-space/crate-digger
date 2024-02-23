@@ -1,6 +1,8 @@
 import os
 import unittest
+
 from dotenv import load_dotenv
+
 from src.lastfm_requests import LastFMCollector
 
 
@@ -40,3 +42,7 @@ class LastFMCollectorTests(unittest.TestCase):
     def testGetLibraryArtistInfo(self):
         library_artist_info = self.lastfm_connection.get_library_artist_info(self.username, limit=100)
         self.assertTrue(len(library_artist_info) == 100)
+
+
+if __name__ == '__main__':
+    unittest.main()
