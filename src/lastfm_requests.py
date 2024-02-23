@@ -11,7 +11,7 @@ class LastFMCollector:
     MUSIC_BRAINZ_ID_FIELD = "mbid"
     NAME_FIELD = "name"
     ARTIST_FIELD = "artist"
-    MAX_CONCURRENT_REQUESTS = 500
+    MAX_CONCURRENT_REQUESTS = 100
 
     def __init__(self, lastfm_api_key: str, lastfm_api_secret: str):
         self.api_key = lastfm_api_key
@@ -21,13 +21,9 @@ class LastFMCollector:
         library_artist_results = self._get_user_artists(username, limit=limit)
         artist_names = [
             artist_dict[self.NAME_FIELD]
-            # if artist_dict[self.MUSIC_BRAINZ_ID_FIELD] != "" else
-            # artist_dict[self.NAME_FIELD]
             for artist_dict in library_artist_results["artists"][self.ARTIST_FIELD]
         ]
         library_artist_info_results = self._get_artists_info_async(artist_names=artist_names)
-        # NOTE: When we have the results, we want to get to check both artist_mbids and library_artist_info_results for mbids
-        # Some show up in one or the other but neither seems to have all that the other doesn't.
         return library_artist_info_results
 
     def _get_user_artists(
