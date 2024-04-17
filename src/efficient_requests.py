@@ -51,9 +51,9 @@ class BurstHttpAdapter(requests.adapters.HTTPAdapter):
     timestamp = None
 
     def __init__(
-        self, burst_window, wait_window=datetime.timedelta(seconds=15), 
+        self, burst_window, wait_window=datetime.timedelta(seconds=15),
         pool_connections=requests.adapters.DEFAULT_POOLSIZE,
-        pool_maxsize=requests.adapters.DEFAULT_POOLSIZE, 
+        pool_maxsize=requests.adapters.DEFAULT_POOLSIZE,
         max_retries=requests.adapters.DEFAULT_RETRIES,
         pool_block=requests.adapters.DEFAULT_POOLBLOCK
     ):
@@ -66,7 +66,7 @@ class BurstHttpAdapter(requests.adapters.HTTPAdapter):
             max_retries=max_retries, pool_block=pool_block)
 
     def send(
-        self, request, stream=False, timeout=None, verify=True, cert=None, 
+        self, request, stream=False, timeout=None, verify=True, cert=None,
         proxies=None
     ):
         response = None
@@ -76,10 +76,10 @@ class BurstHttpAdapter(requests.adapters.HTTPAdapter):
 
         try:
             response = super(BurstHttpAdapter, self).send(
-                request, stream=stream, timeout=timeout, verify=verify, 
+                request, stream=stream, timeout=timeout, verify=verify,
                 cert=cert, proxies=proxies)
             result = json.loads(response.content.decode())
-            if "error" in result and result["error"] == 29:
+            if "error" in result and result["error"] == 29: # TODO: dependency injection.
                 gevent.sleep(self.wait_window.total_seconds(), ref=True)
 
         except Exception:
