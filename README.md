@@ -26,5 +26,5 @@ docker run crate_digger
 
 Run a container with the image interactively (ideal for debugging):
 ```
-docker run -it crate_digger
+docker run -p 8000:8000 crate_digger
 ```
