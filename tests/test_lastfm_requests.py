@@ -3,7 +3,7 @@ import unittest
 
 from dotenv import load_dotenv
 
-from src.lastfm_requests import LastFMCollector
+from crate_digger.lastfm_requests import LastFMCollector
 
 
 class LastFMCollectorTests(unittest.TestCase):

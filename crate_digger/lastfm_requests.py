@@ -2,7 +2,7 @@ from typing import Union, List
 
 import numpy as np
 
-from src.efficient_requests import make_request, send_async_requests
+from crate_digger.efficient_requests import make_request, send_async_requests
 
 
 # Configuration
