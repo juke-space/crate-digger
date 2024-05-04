@@ -12,15 +12,12 @@ dependencies = [
     "python-dotenv==1.0.0",
     "numpy==1.26.3",
     "pytest>=8.2.0",
-    "fastapi>=0.111.0",
 ]
 requires-python = "==3.11.*"
 readme = "README.md"
-license = {text = "MIT"}
-
 
 [tool.pdm]
 distribution = false
 
 [tool.pdm.scripts]
-app = "crate_digger/main.py"
+app = "crate_digger/app.py"
