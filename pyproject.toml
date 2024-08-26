@@ -6,12 +6,13 @@ authors = [
     {name = "carterwward", email = "carterward4@gmail.com"},
 ]
 dependencies = [
-    "requests==2.31.0",
-    "grequests==0.7.0",
-    "gevent==23.9.1",
-    "python-dotenv==1.0.0",
-    "numpy==1.26.3",
+    "requests>=2.31.0",
+    "grequests>=0.7.0",
+    "gevent>=23.9.1",
+    "python-dotenv>=1.0.0",
+    "numpy>=1.26.3",
     "pytest>=8.2.0",
+    "crate-server @ file:///${PROJECT_ROOT}/../crate-digger-model/crate-server/build/generated/crate_server/dist/crate_server-0.1.0-py3-none-any.whl",
 ]
 requires-python = "==3.11.*"
 readme = "README.md"
