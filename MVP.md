@@ -1,5 +1,10 @@
 # Minimum Viable Product
-Let's make this "the reference" for our minimum viable product.
+A high-level description of what we are building, why we are building it, and what the minimally viably version of that solution looks like.
+
+## What is it we are building? What problem are solving?
+### Streaming vs. Search
+
+
 
 ## Customer pain points
 * Forced to rely on automated algorithms for music search and discovery, with little to no input
@@ -23,6 +28,14 @@ Let's make this "the reference" for our minimum viable product.
 | Feature   | 'Worked with' and 'From' Conditions for 'Artist' entity |
 | Monetary  | 'Support us' button with link to Patreon, Buy me a coffee, etc. |
 
+### Notes
+- Start with a web application.
+- Start with just a search engine for artists
+- Start simple - python backend, some sort of js or htmx frontend, sqlite database.
+- Deploy simply, rpi with Argo Tunnel via CloudFlare (no port-forwarding, no subscription)
+- Search must be able to go beyond artist by name
+- Playback may be available, but is not a priority
+
 ## Validity test 
 - [ ] Ready for launch?
 
@@ -36,6 +49,13 @@ Add anyone you know who would be open to testing the MVP after it's built, but b
 | Gavin C      |
 | Gwen F       |
 | Rob F        |
+| Lydia A      |
+| Jaedon B     |
+| Nick K       |
+| Cam H        |
+| Erik W       |
+| Read W       |
+
   
 ## Reference(s)
 * https://www.atlassian.com/agile/product-management/minimum-viable-product
