@@ -7,13 +7,25 @@ For an in-depth description of the problem see: https://theluddite.org/post/the-
 
 ### Streaming vs. Search
 
-
+- If someone wants to play music on the internet, there are many, many good options for that
+- There is not a good solution for exploring music space
+- Exploring music space is more than just playing unheard music or receiving / listening to recommendations.
+- An **exploration**, speaking in terms of a literal expedition, has some *direction*
+- If we are to build a search engine that is not just a vehicle for record finding, but music exploration,
+    we ought to focus on aiding the user in heading the direction they are trying to head in
+- More broadly, we want to bring out the *intention* behind a users search and facilitate an exploration of that kind.
+- We ought to focus on building a tool that allows you to land in a certain location, generally, and then traverse the landscape to find what is of interest.
+- It is less important that the "search" provides the exact "coordinates" (i.e. specific song or artist) that you are interested in.
+    - see https://music-map.com, searching a particular artist gives you is a sea of other artists.
+- This makes interactivity as well as more intimate control over the exploration landscape provided required for a good user experience.
+- Once we have the search and exploration portion solidified, we should try and add a social component to this (as we have previously discussed). Not important for an MVP.
 
 ## Customer pain points
 * Forced to rely on automated algorithms for music search and discovery, with little to no input
 * Often given "poor" recommendations from automated recommendation systems
 * Often given repeated recommendations
 * Often get biased recommendations based on previous likes/dislikes that are difficult to change
+* Complexity of the music landscape is summarized so generally it is hard to understand the terrain (i.e. overly-smooth)
 
 ## Competitive landscape
 * Primarily automated recommendation systems, of which there are many (big) players
