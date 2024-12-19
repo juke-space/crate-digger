@@ -2,6 +2,9 @@
 A high-level description of what we are building, why we are building it, and what the minimally viably version of that solution looks like.
 
 ## What is it we are building? What problem are solving?
+
+For an in-depth description of the problem see: https://theluddite.org/post/the-playlist-lie.html
+
 ### Streaming vs. Search
 
 
@@ -35,6 +38,7 @@ A high-level description of what we are building, why we are building it, and wh
 - Deploy simply, rpi with Argo Tunnel via CloudFlare (no port-forwarding, no subscription)
 - Search must be able to go beyond artist by name
 - Playback may be available, but is not a priority
+- Results should be visual (more than just a list?)
 
 ## Validity test 
 - [ ] Ready for launch?
@@ -58,6 +62,11 @@ Add anyone you know who would be open to testing the MVP after it's built, but b
 
   
 ## Reference(s)
+### Product Inspiration
+* https://www.music-map.com/
+* https://everynoise.com/
+* https://listenbrainz.org/
+### Process Inspiration
 * https://www.atlassian.com/agile/product-management/minimum-viable-product
 * https://theleanstartup.com/principles
 * https://link.springer.com/article/10.1007/s13735-018-0154-2
