@@ -7,11 +7,6 @@ authors = [
 ]
 dependencies = [
     "requests==2.31.0",
-    "grequests==0.7.0",
-    "gevent==23.9.1",
-    "python-dotenv==1.0.0",
-    "numpy==1.26.3",
-    "pytest>=8.2.0",
 ]
 requires-python = "==3.11.*"
 readme = "README.md"
@@ -21,3 +16,9 @@ distribution = false
 
 [tool.pdm.scripts]
 app = "crate_digger/app.py"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+    "black>=24.10.0",
+]
