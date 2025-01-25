@@ -49,7 +49,7 @@ if __name__ == "__main__":
             if area["relation-list"][0]["relations"][0]["area"]["name"] != COUNTRY:
                 continue
             area_id = area["id"]
-            path_params = ["inc=genres+artist-rels", "offset=0"]
+            path_params = ["inc=genres+artist-rels+url-rels", "offset=0"]
             browse_url = _build_browse_url("artist", "area", area_id, deepcopy(path_params))
             browse_response = session.get(browse_url)
             browse_response_body = browse_response.json()
