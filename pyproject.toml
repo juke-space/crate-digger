@@ -8,15 +8,17 @@ authors = [
 dependencies = [
     "requests==2.31.0",
     "crate-server @ file:///${PROJECT_ROOT}/../crate-digger-model/crate-server/build/generated/crate_server/dist/crate_server-0.1.0-py3-none-any.whl",
+    "fastapi>=0.115.8",
+    "uvicorn>=0.34.0",
 ]
-requires-python = ">=3.11.*"
+requires-python = ">=3.11"
 readme = "README.md"
 
 [tool.pdm]
 distribution = false
 
 [tool.pdm.scripts]
-app = "crate_digger/app.py"
+app = "crate_digger/main.py"
 
 [dependency-groups]
 dev = [

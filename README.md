@@ -7,6 +7,11 @@ Follow the directions [here](https://pdm-project.org/latest/) to install PDM on 
 
 Run `pdm sync` within the repository directory to download all dependencies.
 
+## Running Locally for Development
+```
+pdm run app
+```
+
 ## Testing
 To run the test suite, execute the following command:
 ```
