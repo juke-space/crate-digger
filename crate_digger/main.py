@@ -1,5 +1,6 @@
 if not __name__ == '__main__':
     exit()
+
 import uvicorn
 from fastapi import FastAPI
 
@@ -11,7 +12,7 @@ from crate_server.models.artist_query   import ArtistQuery
 app = FastAPI()
 app.include_router(router)
 
-
+# TODO: Move to separate module (out of main)
 class QueryApi(BaseDefaultApi):
     def search_artist(self, artist_query : ArtistQuery):
         # TODO: Remove test artist
