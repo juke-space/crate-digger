@@ -17,14 +17,14 @@ class QueryApi(BaseDefaultApi):
     def search_artist(self, artist_query : ArtistQuery):
         # TODO: Remove test artist
         test_artist = Artist(
-            "Test artist",
-            "Test disambiguation",
-            "Test genre",
-            "Test life start",
-            "Test life end",
-            "Test country",
-            "Test state_province",
-            "Test municipality"
+            name="Test artist",
+            disambiguation="Test disambiguation",
+            genre="Test genre",
+            life_start="Test life start",
+            life_end="Test life end",
+            country="Test country",
+            state_province="Test state_province",
+            municipality="Test municipality"
         )
 
         return [test_artist]
