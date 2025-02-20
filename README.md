@@ -7,9 +7,18 @@ Follow the directions [here](https://pdm-project.org/latest/) to install PDM on 
 
 Run `pdm sync` within the repository directory to download all dependencies.
 
-## Running Locally for Development
+## Running Locally
+### Start server
 ```
 pdm run app
+```
+
+### Make requests
+Using a tool that supports POST requests, such as [curl](https://curl.se/docs/manpage.html), make requests to `http://localhost:8000/SEARCH_ENDPOINT`.
+
+For example:
+```
+curl -X POST http://localhost:8000/artist
 ```
 
 ## Testing
