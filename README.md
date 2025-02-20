@@ -18,6 +18,7 @@ To run the test suite, execute the following command:
 pdm run pytest
 ```
 
+<!-- TODO: Add back when docker setup with new server
 ## Building and Running with Docker
 
 ### Building the Image
@@ -25,3 +26,4 @@ pdm run pytest
 
 ### Running the Image
 `docker run -p 8000:8000 crate_digger`
+-->
