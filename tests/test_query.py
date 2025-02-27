@@ -1,11 +1,20 @@
-from fastapi.testclient import TestClient
+import pytest
+
 from crate_digger.main import app
 from crate_server.models.artist_query import ArtistQuery
+from fastapi.testclient import TestClient
 
-test_client = TestClient(app)
-BASE_URL = "http://localhost:8000"
+TEST_SERVER_URL = "http://localhost:8000"
 
-def test_artist_query():
+@pytest.fixture
+def test_client():
+    yield TestClient(app)
+    
+@pytest.fixture
+def artist_url():
+    yield f"{TEST_SERVER_URL}/artist"
+    
+def test_artist_query(test_client, artist_url):
     query = ArtistQuery(genre="hip-hop", country="USA")
-    response = test_client.post("/".join([BASE_URL, "artist"]), json=query.model_dump())
+    response = test_client.post(artist_url, json=query.model_dump())
     assert response.status_code == 200
