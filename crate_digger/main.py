@@ -12,7 +12,7 @@ from crate_server.models.artist_query import ArtistQuery
 app = FastAPI()
 app.include_router(router)
 
-class QueryApi(BaseDefaultApi):
+class API(BaseDefaultApi):
     def search_artist(self, artist_query : ArtistQuery):
         # TODO: Remove test artist
         test_artist = Artist(
