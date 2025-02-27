@@ -2,8 +2,8 @@
     API methods
 """
 from crate_server.apis.default_api_base import BaseDefaultApi
-from crate_server.models.artist         import Artist
-from crate_server.models.artist_query   import ArtistQuery
+from crate_server.models.artist import Artist
+from crate_server.models.artist_query import ArtistQuery
 
 class QueryApi(BaseDefaultApi):
     def search_artist(self, artist_query : ArtistQuery):
