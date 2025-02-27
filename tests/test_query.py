@@ -4,7 +4,7 @@ from crate_digger.main import app
 from crate_server.models.artist_query import ArtistQuery
 from fastapi.testclient import TestClient
 
-TEST_SERVER_URL = "http://localhost:8000"
+HOST_URL = "http://localhost:8000"
 
 @pytest.fixture
 def test_client():
@@ -12,7 +12,7 @@ def test_client():
     
 @pytest.fixture
 def artist_url():
-    yield f"{TEST_SERVER_URL}/artist"
+    yield f"{HOST_URL}/artist"
     
 def test_artist_query(test_client, artist_url):
     query = ArtistQuery(genre="hip-hop", country="USA")
