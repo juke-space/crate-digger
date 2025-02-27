@@ -1,15 +1,15 @@
 """
     Server entry point
 """
+import fastapi
 import uvicorn
-from fastapi import FastAPI
 
 from crate_server.apis.default_api import router
 from crate_server.apis.default_api_base import BaseDefaultApi
 from crate_server.models.artist import Artist
 from crate_server.models.artist_query import ArtistQuery
 
-app = FastAPI()
+app = fastapi.FastAPI()
 app.include_router(router)
 
 class API(BaseDefaultApi):
@@ -29,4 +29,5 @@ class API(BaseDefaultApi):
         return [test_artist]
 
 if __name__ == "__main__":
+    # TODO: Allow configuration through commandline arguments
     uvicorn.run('main:app', host="0.0.0.0", port=8000, reload=True)
