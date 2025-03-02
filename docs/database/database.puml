@@ -1,0 +1,38 @@
+@startuml Database Schema
+entity "Artist" as A {
+    + artist_id : uuid
+    --
+    + mbid : string
+    + artist_name : string
+    + disambiguation : string
+    + municipality : string
+    + state_province : string
+    + country : string
+    + life_start : date
+    + life_end : date
+}
+
+entity "Genre" as G {
+    + genre_id : uuid
+    --
+    + genre_name : string
+}
+
+entity "ArtistGenre" as AG {
+    + match_id : uuid
+    --
+    + artist_id : uuid
+    + genre_id : uuid
+}
+
+entity "MusicBrainzData" as MBD {
+    + artist_id : uuid
+    --
+    + mbid : string
+    + data : string
+}
+
+A ||--o{ AG
+G ||--o{ AG
+A ||--||MBD
+@enduml
